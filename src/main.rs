@@ -2,7 +2,7 @@ use clap::{Parser, Subcommand, Args};
 
 mod api;
 
-#[derive(Parser)]
+#[derive(Parser, Debug)]
 #[command(author, version)]
 #[command(about = "stringer - a simple cli to transform and inspect strings", long_about = "stringer is a super fancy CLI")]
 struct Cli {
@@ -10,29 +10,29 @@ struct Cli {
     command: Option<Commands>,
 }
 
-#[derive(Subcommand)]
+#[derive(Subcommand, Debug)]
 enum Commands {
     Reverse(Reverse),
 
     Inspect(Inspect),
 }
 
-#[derive(Args)]
+#[derive(Args, Debug)]
 struct Reverse {
     string: Option<String>,
 }
 
-#[derive(Args)]
+#[derive(Args, Debug)]
 struct Inspect {
     string: Option<String>,
     #[arg(short = 'd', long = "digits")]
     only_digits: bool,
 }
 
-
 fn main () {
     let cli = Cli::parse();
 
+    println!("{:?}", cli);
     match &cli.command {
         Some(Commands::Reverse(name)) => {
             match name.string {
